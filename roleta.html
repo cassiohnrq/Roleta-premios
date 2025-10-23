@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Roda da Sorte — Atualizada</title>
+<link rel="stylesheet" href="roleta.css" />
+</head>
+<body>
+<div class="panel" id="editor">
+  <label>Prêmios</label>
+  <div id="prizeList"></div>
+  <input id="newPrizeText" type="text" placeholder="Ex: 10% OFF" />
+  <div class="controls-wrap" style="display:flex;flex-wrap:wrap;gap:10px;margin:10px 0">
+    <div style="flex:1;min-width:120px">
+      <label style="display:block;font-size:12px;margin-bottom:4px">Cor do Fundo</label>
+      <input id="newPrizeColor" type="color" value="#ffcc00" style="width:100%" />
+    </div>
+    <div style="flex:1;min-width:120px">
+      <label style="display:block;font-size:12px;margin-bottom:4px">Cor do Texto</label>
+      <input id="newPrizeTextColor" type="color" value="#000000" style="width:100%" />
+    </div>
+  </div>
+  <!-- <div style="margin:10px 0 20px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <div style="flex:1;min-width:120px">
+      <label style="display:block;font-size:12px;margin-bottom:4px">Cor do Fundo da Página</label>
+      <input id="pageBgColorPicker" type="color" value="#0f172a" style="width:100%" />
+    </div>
+    <div style="flex:1;min-width:120px">
+      <label style="display:block;font-size:12px;margin-bottom:4px">Imagem de Fundo da Página</label>
+      <input id="pageBgImagePicker" type="file" accept="image/*" style="width:100%" />
+    </div>
+  </div> -->
+  <div style="display:flex;gap:10px;margin-top:15px">
+    <button class="addBtn" id="addPrize" style="flex:1">Adicionar</button>
+    <button class="downloadBtn" id="downloadData" style="flex:1">Baixar dados</button>
+  </div>
+  <br />
+    <label>Imagem Central</label>
+  <input id="centerImage" type="file" accept="image/*" />
+  <br /><br />
+  <div id="editablePrizeList"></div>
+</div>
+<button class="toggleBtn" id="togglePanel">Ocultar painel</button>
+
+<div class="main">
+  <div class="wheel-wrap">
+    <canvas id="wheel" width="2000" height="2000"></canvas>
+    <div class="pointer" id="pointer"></div>
+  </div>
+</div>
+
+<div class="form-modal" id="formModal">
+  <div class="modal-box">
+    <h3>Preencha antes de girar</h3>
+    <input id="nome" placeholder="Nome" required>
+    <input id="telefone" placeholder="Telefone" required>
+    <button id="saveForm">Salvar e Girar</button>
+  </div>
+</div>
+
+<div class="result" id="resultModal"><div class="modal-box"><h3 id="resultTitle">Parabéns!</h3><p id="resultText"></p><button id="closeResult">Fechar</button></div></div>
+<script src="roleta.js"></script>
+</body>
+</html>
