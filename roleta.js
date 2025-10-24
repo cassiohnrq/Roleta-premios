@@ -9,7 +9,7 @@ const wheel=document.getElementById('wheel'),ctx=wheel.getContext('2d');
 const pointer=document.getElementById('pointer');
 const resultModal=document.getElementById('resultModal'),resultText=document.getElementById('resultText'),closeResult=document.getElementById('closeResult');
 const formModal=document.getElementById('formModal'),saveForm=document.getElementById('saveForm');
-const nome=document.getElementById('nome'),telefone=document.getElementById('telefone');
+const nome=document.getElementById('nome'),telefone=document.getElementById('telefone'),cliente=document.getElementById('cliente');
 const downloadData=document.getElementById('downloadData');
 const centerImageInput=document.getElementById('centerImage');
 let isSpinning=false;
@@ -155,13 +155,14 @@ function renderEditablePrizeList() {
 }
 renderEditablePrizeList();
 
-function spin(){if(isSpinning)return;nome.value='';telefone.value='';formModal.classList.add('show');}
+function spin(){if(isSpinning)return;nome.value='';telefone.value='';cliente.value='';formModal.classList.add('show');}
 
 saveForm.onclick=()=>{
-  if(!nome.value||!telefone.value)return alert('Preencha todos os campos!');
+  if(!nome.value||!telefone.value||!cliente.value)return alert('Preencha todos os campos!');
   const userData = {
     nome: nome.value,
     telefone: telefone.value,
+    cliente: cliente.value,
     date: new Date().toLocaleString()
   };
   window.currentUser = userData;
@@ -230,8 +231,8 @@ document.getElementById('addPrize').onclick=()=>{
 
 downloadData.onclick=()=>{
   const data=JSON.parse(localStorage.getItem('users')||'[]');if(!data.length)return alert('Sem dados!');
-  const header=['Nome','Telefone','Data','Prêmio'];
-  const rows=data.map(d=>[d.nome,d.telefone,d.date,d.premio]);
+  const header=['Nome','Telefone','Cliente','Data','Prêmio'];
+  const rows=data.map(d=>[d.nome,d.telefone,d.cliente,d.date,d.premio]);
   const csv=[header.join(','),...rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','))].join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const link=document.createElement('a');
