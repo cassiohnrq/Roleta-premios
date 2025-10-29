@@ -229,18 +229,42 @@ document.getElementById('addPrize').onclick=()=>{
   renderEditablePrizeList();
 };
 
-downloadData.onclick=()=>{
-  const data=JSON.parse(localStorage.getItem('users')||'[]');if(!data.length)return alert('Sem dados!');
-  const header=['Nome','Telefone','Cliente','Data','Prêmio'];
-  const rows=data.map(d=>[d.nome,d.telefone,d.cliente,d.date,d.premio]);
-  const csv=[header.join(','),...rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','))].join('\n');
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  const link=document.createElement('a');
-  link.href=URL.createObjectURL(blob);
-  link.download='dados.csv';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+downloadData.onclick = () => {
+    // 1. Coleta e verifica os dados
+    const data = JSON.parse(localStorage.getItem('users') || '[]');
+    if (!data.length) {
+        return alert('Sem dados!');
+    }
+
+    // 2. Define o cabeçalho e as linhas
+    const header = ['Nome', 'Telefone', 'Cliente', 'Data', 'Prêmio'];
+    const rows = data.map(d => [d.nome, d.telefone, d.cliente, d.date, d.premio]);
+
+    // 3. Formata as linhas, garantindo que cada valor esteja entre aspas e escapando aspas internas
+    const formattedRows = rows.map(r => 
+        r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')
+    );
+
+    // 4. Cria a string CSV
+    const csv = [header.join(','), ...formattedRows].join('\n');
+
+    // 5. Adiciona o Byte Order Mark (BOM) para forçar o UTF-8 no Excel
+    // O '\ufeff' é o BOM para UTF-8
+    const csvWithBOM = '\ufeff' + csv;
+
+    // 6. Cria o Blob com a string CSV + BOM
+    // Nota: O tipo MIME é simplificado, já que o BOM fará o trabalho de indicar o UTF-8.
+    const blob = new Blob([csvWithBOM], { type: 'text/csv' });
+
+    // 7. Cria e dispara o download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'dados.csv';
+    
+    // Anexa, clica (dispara o download) e remove o link
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 };
 
 pointer.onclick=spin;wheel.onclick=spin;

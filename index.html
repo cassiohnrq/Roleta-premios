@@ -55,7 +55,11 @@
     <h3>Preencha antes de girar</h3>
     <input id="nome" placeholder="Nome" required>
     <input id="telefone" placeholder="Telefone" required>
-    <input id="cliente" placeholder="Já é cliente?" required>
+    <select id="cliente" required>
+      <option value="" disabled selected>Já é cliente?</option>
+      <option value="Sim">Sim</option>
+      <option value="Não">Não</option>
+    </select>
     <button id="saveForm">Salvar e Girar</button>
   </div>
 </div>
